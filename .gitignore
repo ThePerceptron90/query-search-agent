@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Streamlit secrets — never commit real keys. Use Streamlit Cloud's
+# "Secrets" settings for the deployed app instead.
+.streamlit/secrets.toml
+
+# OS/editor cruft
+.DS_Store
