@@ -30,7 +30,7 @@ behind a black box.
 ## How it works
 
 1. **Ask in plain English.** No PICO formatting required.
-2. **Review the PICO breakdown.** An LLM (Groq-hosted Llama) splits the
+2. **Review the PICO breakdown.** An LLM (Groq-hosted) splits the
    question into Population, Intervention, Comparator, and Outcome — shown
    in editable fields. Nothing else runs until you approve it.
 3. **Term expansion.** Population and Intervention concepts are expanded
@@ -71,22 +71,6 @@ every unrelated UI interaction (the actual cause of early rate-limit
 errors — not usage volume, but redundant re-runs of identical work); Groq
 calls per question were cut from up to 9 to a typical 3 by merging
 per-concept calls and making Comparator/Outcome processing lazy.
-
----
-
-## A debugging lesson worth sharing
-
-Converting the UI to a dark theme took five rounds of CSS fixes, and the
-pattern behind it is worth more than the fix itself: each round assumed
-something about Streamlit's internal markup (`data-testid`, `data-baseweb`
-attributes) without checking it, and each assumption was wrong in a
-slightly different way — right up until inspecting the actual rendered
-DOM in the browser revealed the real cause (a newer Streamlit version had
-quietly swapped the old widget library for a different one entirely, so
-an entire category of CSS rules had been matching nothing). The fix that
-actually stuck was architectural — reset every element to a known blank
-state first, then deliberately repaint only what needs its own styling —
-rather than chasing individual symptoms as they appeared.
 
 ---
 
