@@ -53,37 +53,6 @@ behind a black box.
 
 ---
 
-## Validation
-
-The search logic was checked against **real, published landmark trials**
-using the "known-item test" method (the same approach used in PRESS
-checklist peer review): does the generated search string actually surface
-a paper that should obviously be included?
-
-| Trial | Condition/drug | Result |
-|---|---|---|
-| STELLAR | Sotatercept / pulmonary hypertension | ✅ Found |
-| EMPEROR-Preserved | Empagliflozin / HFpEF | ✅ Found |
-| ALBATROSS | MRA / post-MI heart failure | ✅ Found |
-| 3 further independent trials | Various | ✅ All found, first try |
-
-Real bugs were found and fixed through this process — nested-list parsing
-errors, a URL-length crash (PubMed GET requests failing above a length
-limit, fixed by switching to POST), an over-narrow AND-logic design that
-collapsed results to near-zero until the Cochrane Handbook methodology was
-adopted, and two cases of phrase-matching fragility (PubMed's exact-phrase
-search missing real papers over small wording differences like "with" vs.
-"and a", or a paper that only used a bare abbreviation after its first
-mention). Each was diagnosed by pulling the actual abstract text via
-PubMed's API and reading why the match failed, not by guessing.
-
-**Recurring lesson:** plain-language instructions to the LLM weren't
-reliably followed for the trickier wording cases — a concrete worked
-example in the prompt fixed it reliably where restating the instruction
-more forcefully didn't.
-
----
-
 ## Architecture
 
 - **`backend.py`** — all logic: PubMed E-utilities helpers, Groq/LLM
